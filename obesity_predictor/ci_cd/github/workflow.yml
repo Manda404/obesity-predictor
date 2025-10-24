@@ -1,0 +1,87 @@
+name: 🚀 CI/CD Pipeline — Obesity Predictor
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main, dev ]
+
+jobs:
+  build-and-test:
+    name: 🧪 Test, Lint & Build
+    runs-on: ubuntu-latest
+
+    env:
+      PYTHONPATH: ${{ github.workspace }}
+      MLFLOW_TRACKING_URI: "sqlite:///mlflow.db"
+      MLFLOW_EXPERIMENT_NAME: "obesity_experiments"
+
+    steps:
+      # -----------------------------
+      # 1️⃣ Checkout repository
+      # -----------------------------
+      - name: 📦 Checkout code
+        uses: actions/checkout@v4
+
+      # -----------------------------
+      # 2️⃣ Set up Python environment
+      # -----------------------------
+      - name: 🐍 Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # -----------------------------
+      # 3️⃣ Install Poetry
+      # -----------------------------
+      - name: 🧰 Install Poetry
+        run: |
+          pip install poetry
+          poetry config virtualenvs.create false
+
+      # -----------------------------
+      # 4️⃣ Install dependencies
+      # -----------------------------
+      - name: 📦 Install project dependencies
+        run: |
+          poetry install --no-root
+
+      # -----------------------------
+      # 5️⃣ Lint & Format check
+      # -----------------------------
+      - name: 🧹 Code quality (Black + isort)
+        run: |
+          pip install black isort
+          black --check obesity_predictor
+          isort --check-only obesity_predictor
+
+      - name: 🧠 Typing check (mypy)
+        run: |
+          pip install mypy
+          mypy obesity_predictor --ignore-missing-imports
+
+      # -----------------------------
+      # 6️⃣ Run tests (pytest)
+      # -----------------------------
+      - name: ✅ Run unit tests
+        run: |
+          pip install pytest
+          pytest -v --maxfail=1 --disable-warnings --cov=obesity_predictor
+
+      # -----------------------------
+      # 7️⃣ Build Docker images
+      # -----------------------------
+      - name: 🐳 Build Docker images (API + App)
+        run: |
+          docker build -t obesity-api -f obesity_predictor/ci_cd/docker/Dockerfile.api .
+          docker build -t obesity-app -f obesity_predictor/ci_cd/docker/Dockerfile.app .
+
+      # -----------------------------
+      # 8️⃣ Upload coverage report
+      # -----------------------------
+      - name: 📈 Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./coverage.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: false

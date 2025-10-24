@@ -1,0 +1,20 @@
+/* style.css */
+/* Streamlit app custom styling */
+
+body {
+  background-color: #f8f9fa;
+  font-family: "Poppins", sans-serif;
+}
+
+h1, h2, h3 {
+  color: #1a237e;
+}
+
+.sidebar .sidebar-content {
+  background-color: #e3f2fd;
+}
+
+button {
+  border-radius: 10px;
+  font-weight: 600;
+}

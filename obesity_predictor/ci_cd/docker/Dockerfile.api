@@ -1,0 +1,12 @@
+# Dockerfile for FastAPI inference API
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY pyproject.toml poetry.lock* /app/
+RUN pip install poetry && poetry config virtualenvs.create false && poetry install --no-dev
+
+COPY obesity_predictor /app/obesity_predictor
+EXPOSE 8000
+
+CMD ["uvicorn", "obesity_predictor.api.main_api:app", "--host", "0.0.0.0", "--port", "8000"]
