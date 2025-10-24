@@ -1,0 +1,115 @@
+# ============================================
+# ObesityPredictor - .gitignore
+# ============================================
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.eggs/
+*.log
+*.out
+*.pid
+
+# --- Virtual Environments ---
+.env
+.venv/
+venv/
+ENV/
+env/
+*.env
+
+# --- Poetry ---
+poetry.lock
+
+# --- Jupyter / IPython ---
+.ipynb_checkpoints/
+.notebook_cache/
+.notebook/
+.profile
+*.nbconvert.ipynb
+
+# --- Data & Artifacts ---
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+data/models/*
+!data/models/.gitkeep
+obesity_artifacts/
+artifacts/
+mlruns/
+mlartifacts/
+logs/
+runs/
+
+# --- MLflow ---
+mlruns/
+mlflow.db
+mlflow.log
+mlruns.db
+*.mlmodel
+
+# --- Streamlit ---
+.streamlit/
+.streamlit_cache/
+
+# --- FastAPI / Uvicorn ---
+uvicorn.log
+*.sqlite3
+
+# --- Tests & Coverage ---
+.coverage
+coverage.xml
+htmlcov/
+pytest_cache/
+tests/__pycache__/
+.tox/
+
+# --- IDE / Editors ---
+.vscode/
+.idea/
+*.iml
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+*.bak
+
+# --- Docker ---
+docker-compose.override.yml
+*.tar
+*.log
+**/Dockerfile.*~
+**/docker-compose.*~
+
+# --- CI/CD ---
+.github/
+ci_cd/github/
+
+# --- Monitoring ---
+prometheus_data/
+grafana_data/
+
+# --- Cache & temp files ---
+*.tmp
+*.temp
+*.bak
+*.lock
+__MACOSX/
+*.zip
+*.tar.gz
+
+# --- Node / Front (if UI assets built) ---
+node_modules/
+dist/
+build/
+yarn.lock
+package-lock.json
+
+# --- Project-specific ---
+obesity_predictor/__pycache__/
+obesity_predictor/**/*.pyc
