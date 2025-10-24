@@ -2,7 +2,7 @@
 
 ## 🧠 ObesityPredictor
 
-> *A complete, production-ready ML & MLOps project for obesity classification.*
+*A complete, production-ready ML & MLOps project for obesity classification.*
 
 ---
 
